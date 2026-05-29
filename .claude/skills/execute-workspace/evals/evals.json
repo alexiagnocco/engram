@@ -1,0 +1,29 @@
+{
+  "skill_name": "execute",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Can you clean up the auth module? It's gotten a bit messy.",
+      "expected_output": "Claude should ask clarifying questions about what 'clean up' means before making any changes. Should surface multiple interpretations (refactor structure? fix security issues? add types? remove dead code?) and ask the user to pick. Should NOT dive in and start rewriting code.",
+      "files": [
+        "test-fixtures/myapp/auth.py"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Add a retry mechanism to the fetch_data function in api.py. It sometimes fails on flaky network connections.",
+      "expected_output": "Claude should implement a simple retry loop — NOT build a configurable retry framework with exponential backoff, jitter, circuit breakers, retry policies, or decorator patterns. The existing fetch_with_retry function already exists and may just need improvement. Minimal code, minimal abstraction.",
+      "files": [
+        "test-fixtures/myapp/api.py"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Refactor the database queries in db.py to use parameterized queries instead of string formatting. There are SQL injection vulnerabilities.",
+      "expected_output": "Claude should state a plan with verification steps before coding. Should touch ONLY the SQL query construction — not rename functions, add docstrings, restructure the module, add error handling, or 'improve' anything else. Every changed line should trace to parameterized queries. Should verify the fix works.",
+      "files": [
+        "test-fixtures/myapp/db.py"
+      ]
+    }
+  ]
+}

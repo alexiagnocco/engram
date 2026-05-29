@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "parameterized-queries",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Response includes a numbered plan or step list before showing code changes",
+      "passed": false,
+      "evidence": "Goes directly to a vulnerability table and then full refactored code. No plan or step list stated before implementation."
+    },
+    {
+      "text": "All SQL queries in the proposed code use %s or ? placeholders instead of string formatting",
+      "passed": true,
+      "evidence": "All 6 functions use ? placeholders with tuple/list parameters"
+    },
+    {
+      "text": "Response does NOT rename functions, add docstrings, restructure the module, or add error handling beyond what is needed for parameterization",
+      "passed": true,
+      "evidence": "Added a comment explaining the allowlist and an empty-fields guard. Both are related to the parameterization fix. No function renames, docstrings, or restructuring."
+    },
+    {
+      "text": "All 6 functions in db.py have their queries converted to parameterized form",
+      "passed": true,
+      "evidence": "get_user, get_users_by_role, search_users, insert_user, update_user, delete_user — all 6 converted"
+    }
+  ]
+}

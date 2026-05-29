@@ -1,0 +1,22 @@
+{
+  "eval_id": 0,
+  "eval_name": "ambiguous-scope",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Response contains at least one question to the user before proposing changes",
+      "passed": true,
+      "evidence": "Asks 'What does messy mean to you in this context?' with 4 concrete options before writing any code"
+    },
+    {
+      "text": "Response presents 2 or more possible meanings of 'clean up'",
+      "passed": true,
+      "evidence": "Presents 5 distinct interpretations (A-E): style/formatting, unused import, SESSION_STORE architecture, timing-vulnerable comparison, dead MAX_LOGIN_ATTEMPTS constant"
+    },
+    {
+      "text": "Response does NOT include a full rewrite of auth.py without first getting user confirmation on scope",
+      "passed": true,
+      "evidence": "No code is written. Only a conditional plan is outlined ('If you confirm option 1, I'd plan to...') with 3 surgical steps"
+    }
+  ]
+}

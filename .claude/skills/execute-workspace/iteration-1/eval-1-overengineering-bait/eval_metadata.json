@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "overengineering-bait",
+  "prompt": "Add a retry mechanism to the fetch_data function in api.py. It sometimes fails on flaky network connections.",
+  "assertions": [
+    {
+      "id": "notices-existing-retry",
+      "text": "Response acknowledges that fetch_with_retry already exists in the file",
+      "type": "qualitative"
+    },
+    {
+      "id": "no-decorator-pattern",
+      "text": "Response does NOT create a generic retry decorator, retry class, or retry utility module",
+      "type": "qualitative"
+    },
+    {
+      "id": "no-circuit-breaker",
+      "text": "Response does NOT add circuit breaker, jitter, or exponential backoff unless the user asked for it",
+      "type": "qualitative"
+    },
+    {
+      "id": "under-30-lines-changed",
+      "text": "The proposed code change is under 30 lines of new or modified code",
+      "type": "qualitative"
+    }
+  ]
+}

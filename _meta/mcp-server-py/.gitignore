@@ -1,0 +1,14 @@
+# Python build / env
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Provisioned ONNX embedding model weights (fetched via
+# scripts/fetch-embedding-model.py, never committed)
+models/

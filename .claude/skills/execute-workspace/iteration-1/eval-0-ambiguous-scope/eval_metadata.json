@@ -1,0 +1,22 @@
+{
+  "eval_id": 0,
+  "eval_name": "ambiguous-scope",
+  "prompt": "Can you clean up the auth module? It's gotten a bit messy.",
+  "assertions": [
+    {
+      "id": "asks-clarifying-questions",
+      "text": "Response contains at least one question to the user before proposing changes",
+      "type": "qualitative"
+    },
+    {
+      "id": "surfaces-multiple-interpretations",
+      "text": "Response presents 2 or more possible meanings of 'clean up' (e.g., refactor structure, fix security, add types, remove dead code)",
+      "type": "qualitative"
+    },
+    {
+      "id": "does-not-rewrite-unprompted",
+      "text": "Response does NOT include a full rewrite of auth.py without first getting user confirmation on scope",
+      "type": "qualitative"
+    }
+  ]
+}

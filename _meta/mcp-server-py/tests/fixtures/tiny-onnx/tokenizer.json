@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "truncation": {
+    "direction": "Right",
+    "max_length": 16,
+    "strategy": "LongestFirst",
+    "stride": 0
+  },
+  "padding": {
+    "strategy": {
+      "Fixed": 16
+    },
+    "direction": "Right",
+    "pad_to_multiple_of": null,
+    "pad_id": 0,
+    "pad_type_id": 0,
+    "pad_token": "[UNK]"
+  },
+  "added_tokens": [],
+  "normalizer": null,
+  "pre_tokenizer": {
+    "type": "Whitespace"
+  },
+  "post_processor": null,
+  "decoder": null,
+  "model": {
+    "type": "WordLevel",
+    "vocab": {
+      "[UNK]": 0,
+      "git": 1,
+      "rebase": 2,
+      "merge": 3,
+      "conflict": 4,
+      "sql": 5,
+      "window": 6,
+      "function": 7,
+      "branch": 8,
+      "commit": 9
+    },
+    "unk_token": "[UNK]"
+  }
+}

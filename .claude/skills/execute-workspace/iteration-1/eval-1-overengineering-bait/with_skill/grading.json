@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "overengineering-bait",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Response acknowledges that fetch_with_retry already exists in the file",
+      "passed": true,
+      "evidence": "First line: 'fetch_with_retry already exists in this file (lines 60-69)'"
+    },
+    {
+      "text": "Response does NOT create a generic retry decorator, retry class, or retry utility module",
+      "passed": true,
+      "evidence": "No decorator, class, or utility. Just a simple inline retry loop."
+    },
+    {
+      "text": "Response does NOT add circuit breaker, jitter, or exponential backoff unless the user asked for it",
+      "passed": true,
+      "evidence": "Fixed 1-second sleep between attempts. No backoff parameter, no jitter, no circuit breaker."
+    },
+    {
+      "text": "The proposed code change is under 30 lines of new or modified code",
+      "passed": true,
+      "evidence": "12 lines of code shown, plus deletion of fetch_with_retry. Total diff is well under 30 lines."
+    }
+  ]
+}

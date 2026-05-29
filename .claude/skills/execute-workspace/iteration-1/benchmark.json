@@ -1,0 +1,161 @@
+{
+  "metadata": {
+    "skill_name": "execute",
+    "skill_path": ".claude/skills/execute",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-05-14T09:30:00Z",
+    "evals_run": [0, 1, 2],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "eval_name": "ambiguous-scope",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 38.8,
+        "tokens": 38591,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response contains at least one question to the user before proposing changes", "passed": true, "evidence": "Asks 'What does messy mean to you in this context?' with 4 concrete options before writing any code"},
+        {"text": "Response presents 2 or more possible meanings of 'clean up'", "passed": true, "evidence": "Presents 5 distinct interpretations (A-E): style/formatting, unused import, SESSION_STORE architecture, timing-vulnerable comparison, dead MAX_LOGIN_ATTEMPTS constant"},
+        {"text": "Response does NOT include a full rewrite of auth.py without first getting user confirmation on scope", "passed": true, "evidence": "No code is written. Only a conditional plan is outlined with 3 surgical steps"}
+      ]
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "ambiguous-scope",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.667,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 33.1,
+        "tokens": 37504,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response contains at least one question to the user before proposing changes", "passed": true, "evidence": "Asks 'Which of these is closest to what you're seeing as messy?'"},
+        {"text": "Response presents 2 or more possible meanings of 'clean up'", "passed": true, "evidence": "Presents 4 interpretations: code style, architecture, security, missing functionality"},
+        {"text": "Response does NOT include a full rewrite of auth.py without first getting user confirmation on scope", "passed": false, "evidence": "Includes a complete ~80-line rewrite as 'Option A' with type hints, docstrings, and logic changes BEFORE user confirmed scope"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "overengineering-bait",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 32.1,
+        "tokens": 38161,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response acknowledges that fetch_with_retry already exists in the file", "passed": true, "evidence": "First line: 'fetch_with_retry already exists in this file (lines 60-69)'"},
+        {"text": "Response does NOT create a generic retry decorator, retry class, or retry utility module", "passed": true, "evidence": "No decorator, class, or utility. Just a simple inline retry loop."},
+        {"text": "Response does NOT add circuit breaker, jitter, or exponential backoff", "passed": true, "evidence": "Fixed 1-second sleep between attempts. No backoff parameter, no jitter, no circuit breaker."},
+        {"text": "The proposed code change is under 30 lines of new or modified code", "passed": true, "evidence": "12 lines of code shown, plus deletion of fetch_with_retry."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "overengineering-bait",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 28.5,
+        "tokens": 37664,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response acknowledges that fetch_with_retry already exists in the file", "passed": true, "evidence": "Mentions 'The file already has a fetch_with_retry function'"},
+        {"text": "Response does NOT create a generic retry decorator, retry class, or retry utility module", "passed": true, "evidence": "No decorator or class pattern. Inline retry loop."},
+        {"text": "Response does NOT add circuit breaker, jitter, or exponential backoff", "passed": true, "evidence": "Uses a fixed backoff parameter (1.0 seconds) — no jitter or exponential scaling."},
+        {"text": "The proposed code change is under 30 lines of new or modified code", "passed": false, "evidence": "Reproduces the entire api.py file (~70 lines) including all unchanged handler functions. Only ~15 lines actually changed."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "parameterized-queries",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 42.6,
+        "tokens": 38794,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response includes a numbered plan or step list before showing code changes", "passed": true, "evidence": "Has a '## Plan' section with 3 numbered steps, each with a 'verify:' check, before any proposed code"},
+        {"text": "All SQL queries use parameterized placeholders instead of string formatting", "passed": true, "evidence": "All 6 functions use %s placeholders with tuple parameters"},
+        {"text": "Response does NOT rename functions, add docstrings, restructure the module, or add unrelated error handling", "passed": true, "evidence": "Only added _UPDATABLE_FIELDS allowlist (directly needed for column-name safety) and ValueError (part of the SQL injection fix)"},
+        {"text": "All 6 functions in db.py have their queries converted to parameterized form", "passed": true, "evidence": "get_user, get_users_by_role, search_users, insert_user, update_user, delete_user — all 6 converted"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "parameterized-queries",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 34.5,
+        "tokens": 37648,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Response includes a numbered plan or step list before showing code changes", "passed": false, "evidence": "Goes directly to a vulnerability table and then full refactored code. No plan or step list before implementation."},
+        {"text": "All SQL queries use parameterized placeholders instead of string formatting", "passed": true, "evidence": "All 6 functions use ? placeholders with tuple/list parameters"},
+        {"text": "Response does NOT rename functions, add docstrings, restructure the module, or add unrelated error handling", "passed": true, "evidence": "Changes are all related to parameterization. Added column allowlist and empty-fields guard — both security-relevant."},
+        {"text": "All 6 functions in db.py have their queries converted to parameterized form", "passed": true, "evidence": "All 6 functions converted"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 37.83, "stddev": 5.3, "min": 32.1, "max": 42.6},
+      "tokens": {"mean": 38515, "stddev": 320, "min": 38161, "max": 38794}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.722, "stddev": 0.048, "min": 0.667, "max": 0.75},
+      "time_seconds": {"mean": 32.03, "stddev": 3.14, "min": 28.5, "max": 34.5},
+      "tokens": {"mean": 37605, "stddev": 87, "min": 37504, "max": 37664}
+    },
+    "delta": {
+      "pass_rate": "+0.278",
+      "time_seconds": "+5.8",
+      "tokens": "+910"
+    }
+  },
+  "notes": [
+    "With-skill achieves 100% pass rate across all 3 evals vs 72.2% baseline — the skill consistently prevents the three failure modes: premature rewrites, full-file dumps, and missing plans",
+    "The baseline fails on different assertions per eval: premature rewrite (eval 0), full-file output (eval 1), and missing plan (eval 2) — the skill addresses a range of behavioral failures, not one narrow pattern",
+    "Token cost delta is minimal (+910 tokens, ~2.4% increase) — the skill adds almost no overhead",
+    "Time delta is +5.8s average — the 'think before coding' discipline adds a small time cost for significantly better behavioral compliance",
+    "All assertions that check for 'does NOT do X' (negative assertions) pass 100% with skill — the skill's biggest value is in preventing overreach, not adding capabilities"
+  ]
+}

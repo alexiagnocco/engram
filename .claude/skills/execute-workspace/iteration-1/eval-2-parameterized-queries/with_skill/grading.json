@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "parameterized-queries",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Response includes a numbered plan or step list before showing code changes",
+      "passed": true,
+      "evidence": "Has a '## Plan' section with 3 numbered steps, each with a '→ verify:' check, before any proposed code"
+    },
+    {
+      "text": "All SQL queries in the proposed code use %s or ? placeholders instead of string formatting",
+      "passed": true,
+      "evidence": "All 6 functions use %s placeholders with tuple parameters passed to cursor.execute()"
+    },
+    {
+      "text": "Response does NOT rename functions, add docstrings, restructure the module, or add error handling beyond what is needed for parameterization",
+      "passed": true,
+      "evidence": "No function renames, no docstrings added, no restructuring. Only added _UPDATABLE_FIELDS allowlist (directly needed for column-name safety) and ValueError for unknown fields (part of the SQL injection fix)."
+    },
+    {
+      "text": "All 6 functions in db.py have their queries converted to parameterized form",
+      "passed": true,
+      "evidence": "get_user, get_users_by_role, search_users, insert_user, update_user, delete_user — all 6 converted"
+    }
+  ]
+}

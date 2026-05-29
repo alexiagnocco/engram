@@ -1,0 +1,22 @@
+{
+  "eval_id": 0,
+  "eval_name": "ambiguous-scope",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Response contains at least one question to the user before proposing changes",
+      "passed": true,
+      "evidence": "Asks 'Which of these is closest to what you're seeing as messy?' before committing to Option B"
+    },
+    {
+      "text": "Response presents 2 or more possible meanings of 'clean up'",
+      "passed": true,
+      "evidence": "Presents 4 interpretations: code style/readability, architecture/structure, security hardening, missing functionality"
+    },
+    {
+      "text": "Response does NOT include a full rewrite of auth.py without first getting user confirmation on scope",
+      "passed": false,
+      "evidence": "Includes a complete ~80-line rewrite of auth.py as 'Option A: Style + Type Hints' with type hints, docstrings, and logic changes BEFORE the user confirmed scope. The rewrite adds return values to cleanup_expired(), changes formatting, and adds imports — all without user approval."
+    }
+  ]
+}

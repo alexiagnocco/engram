@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "parameterized-queries",
+  "prompt": "Refactor the database queries in db.py to use parameterized queries instead of string formatting. There are SQL injection vulnerabilities.",
+  "assertions": [
+    {
+      "id": "states-plan-before-coding",
+      "text": "Response includes a numbered plan or step list before showing code changes",
+      "type": "qualitative"
+    },
+    {
+      "id": "uses-parameterized-queries",
+      "text": "All SQL queries in the proposed code use ? or %s placeholders instead of string formatting",
+      "type": "qualitative"
+    },
+    {
+      "id": "no-unrelated-changes",
+      "text": "Response does NOT rename functions, add docstrings, restructure the module, or add error handling beyond what is needed for parameterization",
+      "type": "qualitative"
+    },
+    {
+      "id": "every-query-fixed",
+      "text": "All 6 functions in db.py have their queries converted to parameterized form",
+      "type": "qualitative"
+    }
+  ]
+}
