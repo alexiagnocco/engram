@@ -337,14 +337,16 @@ code, pre { font-family: var(--font-mono); }
 .ref-col code, .chip-group code {
   font-size: .78rem; padding: .26em .55em; border-radius: 7px;
   background: rgba(122,152,204,.08); border: 1px solid var(--line); color: var(--ink-2);
+  cursor: pointer; user-select: none;
   transition: color .2s, border-color .2s, background .2s;
 }
 .ref-col code:hover { color: var(--teal); border-color: rgba(60,230,196,.4); background: rgba(60,230,196,.07); }
+.ref-col code:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.ref-col code.active { color: var(--teal); border-color: rgba(60,230,196,.65); background: rgba(60,230,196,.14); font-weight: 600; }
 .skill-groups { margin: 0; }
 .skill-groups dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
-.evolve-note { margin: 2rem 0 0; padding: 1.3rem 1.5rem; border-left: 2px solid var(--teal); background: rgba(60,230,196,.05); border-radius: 0 12px 12px 0; color: var(--ink-2); }
-.evolve-note b { color: var(--teal); }
-.evolve-note em { color: var(--ink); font-style: italic; }
+.ref-desc { margin: 2rem 0 0; padding: 1.3rem 1.5rem; border-left: 2px solid var(--teal); background: rgba(60,230,196,.05); border-radius: 0 12px 12px 0; color: var(--muted); transition: color .2s, background .2s; }
+.ref-desc.open { color: var(--ink-2); background: rgba(60,230,196,.08); }
 
 /* code blocks */
 .code { position: relative; margin: 0 0 1.2rem; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: #05070e; }

@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Spline+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
@@ -224,32 +224,32 @@ utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
         <h3>MCP tools <span class="count">23</span></h3>
         <div class="chip-group">
           <span class="grp-label">read / search</span>
-          <code>vault_status</code><code>vault_search</code><code>vault_read</code><code>vault_recent</code><code>vault_related</code><code>vault_manifest</code><code>vault_rebuild</code><code>vault_document_map</code><code>vault_tags</code><code>vault_active</code>
+          <code data-desc="Connection status, plugin version, and server health.">vault_status</code><code data-desc="Search vault notes by metadata filters and/or text query.">vault_search</code><code data-desc="Read the full content of one or more vault notes by path.">vault_read</code><code data-desc="Get notes modified in the last N days.">vault_recent</code><code data-desc="Get bidirectional link neighbors for a note.">vault_related</code><code data-desc="Return the vault manifest index.">vault_manifest</code><code data-desc="Trigger a manifest rebuild from vault contents.">vault_rebuild</code><code data-desc="Get the heading/block/frontmatter skeleton for a note. Requires REST.">vault_document_map</code><code data-desc="List all tags with hierarchical counts. Requires REST.">vault_tags</code><code data-desc="Read, append to, or replace the currently-open note in Obsidian. Requires REST.">vault_active</code>
         </div>
         <div class="chip-group">
           <span class="grp-label">retrieval &amp; knowledge-health</span>
-          <code>vault_retrieve</code><code>vault_health</code><code>vault_context</code><code>vault_session_check</code><code>vault_feedback</code><code>vault_sigma_rho</code><code>vault_prune_dryrun</code><code>vault_unmined_sessions</code>
+          <code data-desc="Hybrid composite-score + dense-vector retrieval with re-ranking.">vault_retrieve</code><code data-desc="Compute knowledge health metrics: K, I(t), delta, sigma, rho, phi, escape velocity, dK/dt.">vault_health</code><code data-desc="Pre-session context loader: surfaces relevant vault knowledge at session start.">vault_context</code><code data-desc="Post-session validation: checks that knowledge was persisted properly.">vault_session_check</code><code data-desc="Record whether retrieved notes were actually helpful (MemRL feedback).">vault_feedback</code><code data-desc="Compute true sigma and rho from MemRL feedback data.">vault_sigma_rho</code><code data-desc="Dry-run prune scan: count candidates by category without moving anything.">vault_prune_dryrun</code><code data-desc="Check for unmined sessions that should be processed for knowledge extraction.">vault_unmined_sessions</code>
         </div>
         <div class="chip-group">
           <span class="grp-label">write</span>
-          <code>vault_checkpoint</code><code>vault_patch</code><code>vault_periodic</code><code>vault_command</code><code>vault_open</code>
+          <code data-desc="Mid-session incremental project memory update.">vault_checkpoint</code><code data-desc="Surgical heading/block/frontmatter edit via REST PATCH. Requires REST.">vault_patch</code><code data-desc="Daily/weekly/monthly/quarterly/yearly note CRUD. Requires REST.">vault_periodic</code><code data-desc="List or run Obsidian commands. Requires REST.">vault_command</code><code data-desc="Bring a note into focus in the Obsidian UI. Requires REST.">vault_open</code>
         </div>
       </div>
 
       <div class="ref-col reveal" style="--d:1">
         <h3>Skills <span class="count">21</span></h3>
         <dl class="skill-groups">
-          <dt>session lifecycle</dt><dd><code>boot</code><code>wrap</code><code>handoff</code></dd>
-          <dt>retrieval &amp; feedback</dt><dd><code>recall</code><code>retrieve</code><code>feedback</code><code>sigma-rho</code></dd>
-          <dt>knowledge health</dt><dd><code>health</code><code>health-check</code><code>prune</code><code>link-repair</code></dd>
-          <dt>intelligence &amp; evolution</dt><dd><code>evolve</code><code>connect</code><code>think-deep</code><code>weekly-review</code></dd>
-          <dt>capture</dt><dd><code>new-note</code><code>retro</code><code>mine-sessions</code></dd>
-          <dt>engineering</dt><dd><code>frame</code><code>execute</code><code>readme</code></dd>
+          <dt>session lifecycle</dt><dd><code data-desc="Session startup: get date, load context, check health, and surface relevant knowledge.">boot</code><code data-desc="Graceful session shutdown: retro, feedback, handoff, commit, exit.">wrap</code><code data-desc="Capture session context for continuity between sessions.">handoff</code></dd>
+          <dt>retrieval &amp; feedback</dt><dd><code data-desc="Structured vault retrieval with relevance ranking.">recall</code><code data-desc="Composite-scored vault retrieval with MemRL utility weighting.">retrieve</code><code data-desc="Record whether retrieved vault notes were helpful (MemRL feedback loop).">feedback</code><code data-desc="Compute true sigma and rho from MemRL feedback data.">sigma-rho</code></dd>
+          <dt>knowledge health</dt><dd><code data-desc="Quick knowledge health metrics from the knowledge compounding equation.">health</code><code data-desc="Quick vault health scan for orphan notes, broken links, missing frontmatter, and stale content.">health-check</code><code data-desc="Archive stale notes, clean completed items, and maintain vault scale — the remediation half of health-check.">prune</code><code data-desc="Fix broken wikilinks, link orphan notes to MOCs, and repair escape-character bugs.">link-repair</code></dd>
+          <dt>intelligence &amp; evolution</dt><dd><code data-desc="Propose structural improvements to the vault and propagate captured learnings into operational surfaces (skills, rules, hooks).">evolve</code><code data-desc="Find cross-domain connections and synthesis opportunities between notes.">connect</code><code data-desc="Extended reasoning for complex decisions — gathers context, reasons deeply, and persists the thinking chain.">think-deep</code><code data-desc="Generate a 'State of the Vault' assessment of what's working, what's decaying, and what to do next.">weekly-review</code></dd>
+          <dt>capture</dt><dd><code data-desc="Create a new note with proper frontmatter, naming, and linking.">new-note</code><code data-desc="Capture learnings and retrospectives from development work.">retro</code><code data-desc="Find and extract knowledge from unmined Claude Code sessions.">mine-sessions</code></dd>
+          <dt>engineering</dt><dd><code data-desc="Design project scaffolds, directory hierarchies, and naming conventions — or audit and reorganize existing codebases.">frame</code><code data-desc="Pre-task discipline for coding work: think before coding, simplicity first, surgical changes, goal-driven execution.">execute</code><code data-desc="Generate a comprehensive, research-backed README.md for any project by analyzing the codebase.">readme</code></dd>
         </dl>
       </div>
     </div>
 
-    <p class="evolve-note reveal"><b>evolve</b> is the self-improving core: it audits whether learnings captured in memory have actually propagated into the operational surfaces — skills, rules, hooks — that govern behavior, closing the loop between <em>"we learned this"</em> and <em>"the agent now does this."</em></p>
+    <p id="refDesc" class="ref-desc reveal" aria-live="polite" data-empty="Click a tool or skill to see what it does.">Click a tool or skill to see what it does.</p>
   </section>
 
   <!-- ───────────────────────── QUICK START ───────────────────────── -->
@@ -334,6 +334,6 @@ export ENGRAM_EMBEDDINGS_MODEL_DIR=$PWD/models/all-MiniLM-L6-v2</code></pre>
   <p class="foot-credit">Knowledge-compounding model adapted from <a href="https://boshu2.github.io/agentops/the-science/">AgentOps · The Science</a> (boshu2, Apache-2.0) · <a href="https://github.com/alexiagnocco/engram/blob/main/CREDITS.md">Credits</a></p>
 </footer>
 
-<script src="main.js?v=2" defer></script>
+<script src="main.js?v=3" defer></script>
 </body>
 </html>

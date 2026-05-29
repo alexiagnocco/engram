@@ -75,6 +75,33 @@
     });
   });
 
+  /* ---- reference: click a tool/skill to reveal its description (single-open) ---- */
+  const refPanel = document.getElementById("refDesc");
+  if (refPanel) {
+    const chips = [...document.querySelectorAll(".ref-col code[data-desc]")];
+    const emptyText = refPanel.dataset.empty || "";
+    const clear = () => {
+      chips.forEach((c) => c.classList.remove("active"));
+      refPanel.textContent = emptyText;
+      refPanel.classList.remove("open");
+    };
+    const select = (chip) => {
+      if (chip.classList.contains("active")) { clear(); return; }
+      chips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+      refPanel.textContent = chip.dataset.desc;
+      refPanel.classList.add("open");
+    };
+    chips.forEach((chip) => {
+      chip.setAttribute("role", "button");
+      chip.setAttribute("tabindex", "0");
+      chip.addEventListener("click", () => select(chip));
+      chip.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(chip); }
+      });
+    });
+  }
+
   /* ---- hero memory-trace graph ---- */
   const canvas = document.getElementById("graph");
   if (!canvas || reduceMotion) return;
