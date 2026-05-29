@@ -193,6 +193,11 @@ code, pre { font-family: var(--font-mono); }
 .band-alt > * { max-width: var(--maxw); margin-left: auto; margin-right: auto; }
 
 .band-head { max-width: 760px; margin-bottom: 3rem; }
+/* In a full-bleed alt band every direct child is centered at --maxw; the narrower
+   760px head would otherwise center too, offsetting its left edge from the body.
+   Match the head to the same centered --maxw column so left edges coincide at all widths. */
+.band-alt > .band-head { max-width: var(--maxw); }
+.band-alt > .band-head h2 { max-width: 760px; }
 .kicker {
   font-family: var(--font-mono); font-size: .78rem; letter-spacing: .22em; text-transform: uppercase;
   color: var(--teal); display: inline-block; margin-bottom: 1rem;
