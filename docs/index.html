@@ -219,9 +219,13 @@ utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
       <p class="band-sub">The MCP surface and the workflows that compose it.</p>
     </div>
 
-    <div class="ref-grid">
-      <div class="ref-col reveal">
-        <h3>MCP tools <span class="count">23</span></h3>
+    <div class="ref-tabs reveal" role="tablist" aria-label="Reference categories">
+      <button class="ref-tab active" role="tab" aria-selected="true" aria-controls="panel-tools" id="tab-tools">MCP Tools <span class="count">23</span></button>
+      <button class="ref-tab" role="tab" aria-selected="false" aria-controls="panel-skills" id="tab-skills">Skills <span class="count">21</span></button>
+    </div>
+
+    <div class="ref-container reveal" style="--d:1">
+      <div class="ref-panel active" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
         <div class="chip-group">
           <span class="grp-label">read / search</span>
           <code data-desc="Connection status, plugin version, and server health.">vault_status</code><code data-desc="Search vault notes by metadata filters and/or text query.">vault_search</code><code data-desc="Read the full content of one or more vault notes by path.">vault_read</code><code data-desc="Get notes modified in the last N days.">vault_recent</code><code data-desc="Get bidirectional link neighbors for a note.">vault_related</code><code data-desc="Return the vault manifest index.">vault_manifest</code><code data-desc="Trigger a manifest rebuild from vault contents.">vault_rebuild</code><code data-desc="Get the heading/block/frontmatter skeleton for a note. Requires REST.">vault_document_map</code><code data-desc="List all tags with hierarchical counts. Requires REST.">vault_tags</code><code data-desc="Read, append to, or replace the currently-open note in Obsidian. Requires REST.">vault_active</code>
@@ -236,20 +240,41 @@ utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
         </div>
       </div>
 
-      <div class="ref-col reveal" style="--d:1">
-        <h3>Skills <span class="count">21</span></h3>
-        <dl class="skill-groups">
-          <dt>session lifecycle</dt><dd><code data-desc="Session startup: get date, load context, check health, and surface relevant knowledge.">boot</code><code data-desc="Graceful session shutdown: retro, feedback, handoff, commit, exit.">wrap</code><code data-desc="Capture session context for continuity between sessions.">handoff</code></dd>
-          <dt>retrieval &amp; feedback</dt><dd><code data-desc="Structured vault retrieval with relevance ranking.">recall</code><code data-desc="Composite-scored vault retrieval with MemRL utility weighting.">retrieve</code><code data-desc="Record whether retrieved vault notes were helpful (MemRL feedback loop).">feedback</code><code data-desc="Compute true sigma and rho from MemRL feedback data.">sigma-rho</code></dd>
-          <dt>knowledge health</dt><dd><code data-desc="Quick knowledge health metrics from the knowledge compounding equation.">health</code><code data-desc="Quick vault health scan for orphan notes, broken links, missing frontmatter, and stale content.">health-check</code><code data-desc="Archive stale notes, clean completed items, and maintain vault scale — the remediation half of health-check.">prune</code><code data-desc="Fix broken wikilinks, link orphan notes to MOCs, and repair escape-character bugs.">link-repair</code></dd>
-          <dt>intelligence &amp; evolution</dt><dd><code data-desc="Propose structural improvements to the vault and propagate captured learnings into operational surfaces (skills, rules, hooks).">evolve</code><code data-desc="Find cross-domain connections and synthesis opportunities between notes.">connect</code><code data-desc="Extended reasoning for complex decisions — gathers context, reasons deeply, and persists the thinking chain.">think-deep</code><code data-desc="Generate a 'State of the Vault' assessment of what's working, what's decaying, and what to do next.">weekly-review</code></dd>
-          <dt>capture</dt><dd><code data-desc="Create a new note with proper frontmatter, naming, and linking.">new-note</code><code data-desc="Capture learnings and retrospectives from development work.">retro</code><code data-desc="Find and extract knowledge from unmined Claude Code sessions.">mine-sessions</code></dd>
-          <dt>engineering</dt><dd><code data-desc="Design project scaffolds, directory hierarchies, and naming conventions — or audit and reorganize existing codebases.">frame</code><code data-desc="Pre-task discipline for coding work: think before coding, simplicity first, surgical changes, goal-driven execution.">execute</code><code data-desc="Generate a comprehensive, research-backed README.md for any project by analyzing the codebase.">readme</code></dd>
-        </dl>
+      <div class="ref-panel" id="panel-skills" role="tabpanel" aria-labelledby="tab-skills" hidden>
+        <div class="chip-group">
+          <span class="grp-label">session lifecycle</span>
+          <code data-desc="Session startup: get date, load context, check health, and surface relevant knowledge.">boot</code><code data-desc="Graceful session shutdown: retro, feedback, handoff, commit, exit.">wrap</code><code data-desc="Capture session context for continuity between sessions.">handoff</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">retrieval &amp; feedback</span>
+          <code data-desc="Structured vault retrieval with relevance ranking.">recall</code><code data-desc="Composite-scored vault retrieval with MemRL utility weighting.">retrieve</code><code data-desc="Record whether retrieved vault notes were helpful (MemRL feedback loop).">feedback</code><code data-desc="Compute true sigma and rho from MemRL feedback data.">sigma-rho</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">knowledge health</span>
+          <code data-desc="Quick knowledge health metrics from the knowledge compounding equation.">health</code><code data-desc="Quick vault health scan for orphan notes, broken links, missing frontmatter, and stale content.">health-check</code><code data-desc="Archive stale notes, clean completed items, and maintain vault scale — the remediation half of health-check.">prune</code><code data-desc="Fix broken wikilinks, link orphan notes to MOCs, and repair escape-character bugs.">link-repair</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">intelligence &amp; evolution</span>
+          <code data-desc="Propose structural improvements to the vault and propagate captured learnings into operational surfaces (skills, rules, hooks).">evolve</code><code data-desc="Find cross-domain connections and synthesis opportunities between notes.">connect</code><code data-desc="Extended reasoning for complex decisions — gathers context, reasons deeply, and persists the thinking chain.">think-deep</code><code data-desc="Generate a 'State of the Vault' assessment of what's working, what's decaying, and what to do next.">weekly-review</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">capture</span>
+          <code data-desc="Create a new note with proper frontmatter, naming, and linking.">new-note</code><code data-desc="Capture learnings and retrospectives from development work.">retro</code><code data-desc="Find and extract knowledge from unmined Claude Code sessions.">mine-sessions</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">engineering</span>
+          <code data-desc="Design project scaffolds, directory hierarchies, and naming conventions — or audit and reorganize existing codebases.">frame</code><code data-desc="Pre-task discipline for coding work: think before coding, simplicity first, surgical changes, goal-driven execution.">execute</code><code data-desc="Generate a comprehensive, research-backed README.md for any project by analyzing the codebase.">readme</code>
+        </div>
+      </div>
+
+      <div class="ref-detail" id="refDetail" aria-live="polite">
+        <div class="ref-detail-inner">
+          <span class="ref-detail-prompt">Select a tool or skill above</span>
+          <h4 class="ref-detail-name"></h4>
+          <p class="ref-detail-desc"></p>
+        </div>
       </div>
     </div>
-
-    <p id="refDesc" class="ref-desc reveal" aria-live="polite" data-empty="Click a tool or skill to see what it does.">Click a tool or skill to see what it does.</p>
   </section>
 
   <!-- ───────────────────────── QUICK START ───────────────────────── -->

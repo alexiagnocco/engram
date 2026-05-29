@@ -75,29 +75,52 @@
     });
   });
 
-  /* ---- reference: click a tool/skill to reveal its description (single-open) ---- */
-  const refPanel = document.getElementById("refDesc");
-  if (refPanel) {
-    const chips = [...document.querySelectorAll(".ref-col code[data-desc]")];
-    const emptyText = refPanel.dataset.empty || "";
-    const clear = () => {
-      chips.forEach((c) => c.classList.remove("active"));
-      refPanel.textContent = emptyText;
-      refPanel.classList.remove("open");
+  /* ---- reference: tabbed layout + detail pane ---- */
+  const refTabs = [...document.querySelectorAll(".ref-tab")];
+  const refPanels = [...document.querySelectorAll(".ref-panel")];
+  const refDetail = document.getElementById("refDetail");
+
+  if (refDetail && refTabs.length) {
+    const detailName = refDetail.querySelector(".ref-detail-name");
+    const detailDesc = refDetail.querySelector(".ref-detail-desc");
+    const allChips = [...document.querySelectorAll(".ref-panel code[data-desc]")];
+
+    const clearSelection = () => {
+      allChips.forEach((c) => c.classList.remove("active"));
+      refDetail.classList.remove("has-selection");
+      if (detailName) detailName.textContent = "";
+      if (detailDesc) detailDesc.textContent = "";
     };
-    const select = (chip) => {
-      if (chip.classList.contains("active")) { clear(); return; }
-      chips.forEach((c) => c.classList.remove("active"));
+
+    const selectChip = (chip) => {
+      if (chip.classList.contains("active")) { clearSelection(); return; }
+      allChips.forEach((c) => c.classList.remove("active"));
       chip.classList.add("active");
-      refPanel.textContent = chip.dataset.desc;
-      refPanel.classList.add("open");
+      refDetail.classList.add("has-selection");
+      if (detailName) detailName.textContent = chip.textContent;
+      if (detailDesc) detailDesc.textContent = chip.dataset.desc;
     };
-    chips.forEach((chip) => {
+
+    allChips.forEach((chip) => {
       chip.setAttribute("role", "button");
       chip.setAttribute("tabindex", "0");
-      chip.addEventListener("click", () => select(chip));
+      chip.addEventListener("click", () => selectChip(chip));
       chip.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(chip); }
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectChip(chip); }
+      });
+    });
+
+    refTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        refTabs.forEach((t) => { t.classList.remove("active"); t.setAttribute("aria-selected", "false"); });
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+        const targetId = tab.getAttribute("aria-controls");
+        refPanels.forEach((p) => {
+          if (p.id === targetId) { p.hidden = false; p.classList.add("active"); }
+          else { p.hidden = true; p.classList.remove("active"); }
+        });
+        clearSelection();
       });
     });
   }
