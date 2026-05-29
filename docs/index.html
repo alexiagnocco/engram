@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>engram — a knowledge-compounding engine</title>
+<meta name="description" content="engram turns an AI coding agent's transient context into a durable, self-improving knowledge base: a Python MCP server with hybrid keyword+dense retrieval and a reinforcement-learning feedback loop, plus a layered stack of skills, hooks, rules, and subagents.">
+<meta name="theme-color" content="#06080f">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="engram — a knowledge-compounding engine">
+<meta property="og:description" content="Hybrid retrieval + a reinforcement-learning feedback loop for AI agent memory. σ·ρ > δ/100.">
+<meta property="og:url" content="https://alexiagnocco.github.io/engram/">
+<meta property="og:image" content="https://alexiagnocco.github.io/engram/assets/engram-banner.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="engram — a knowledge-compounding engine">
+<meta name="twitter:description" content="Hybrid retrieval + a reinforcement-learning feedback loop for AI agent memory.">
+<meta name="twitter:image" content="https://alexiagnocco.github.io/engram/assets/engram-banner.svg">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Spline+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top" aria-label="engram home">
+    <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <g stroke="currentColor" stroke-width="2" opacity="0.5" fill="none">
+        <line x1="18" y1="20" x2="32" y2="34"/><line x1="46" y1="18" x2="32" y2="34"/>
+        <line x1="20" y1="46" x2="32" y2="34"/><line x1="44" y1="46" x2="32" y2="34"/>
+      </g>
+      <circle cx="18" cy="20" r="3.4" fill="currentColor" opacity="0.4"/>
+      <circle cx="46" cy="18" r="3" fill="currentColor" opacity="0.4"/>
+      <circle cx="44" cy="46" r="4.2" fill="currentColor"/>
+      <circle cx="32" cy="34" r="6.5" fill="currentColor"/>
+    </svg>
+    <span>engram</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#thesis">Thesis</a>
+    <a href="#engine">Engine</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#reference">Reference</a>
+    <a href="#quickstart">Quick start</a>
+    <a class="nav-cta" href="https://github.com/alexiagnocco/engram">GitHub ↗</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ───────────────────────── HERO ───────────────────────── -->
+  <section class="hero">
+    <canvas id="graph" aria-hidden="true"></canvas>
+    <div class="hero-bloom" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow reveal">memory that strengthens with use</p>
+      <h1 class="reveal" style="--d:1">engram</h1>
+      <p class="lede reveal" style="--d:2">
+        A knowledge-compounding engine for engineering work — built as a set of
+        <span class="hl">Claude&nbsp;Code customization layers</span>. It turns an AI agent's
+        transient context into a durable, self-improving knowledge base.
+      </p>
+      <div class="equation reveal" style="--d:3" role="img" aria-label="sigma times rho is greater than delta over one hundred">
+        <span class="eq-term" data-tip="coverage">σ</span>
+        <span class="eq-op">·</span>
+        <span class="eq-term" data-tip="precision">ρ</span>
+        <span class="eq-gt">&gt;</span>
+        <span class="eq-term" data-tip="decay">δ</span>
+        <span class="eq-frac">/ 100</span>
+      </div>
+      <p class="eq-caption reveal" style="--d:4">surface the right things faster than you forget them — and knowledge compounds above <em>escape velocity</em>.</p>
+      <div class="cta-row reveal" style="--d:5">
+        <a class="btn btn-primary" href="#engine">See the retrieval engine</a>
+        <a class="btn btn-ghost" href="https://github.com/alexiagnocco/engram">View source ↗</a>
+      </div>
+      <ul class="stat-strip reveal" style="--d:6">
+        <li><b>23</b><span>MCP tools</span></li>
+        <li><b>21</b><span>skills</span></li>
+        <li><b>14</b><span>hooks</span></li>
+        <li><b>8</b><span>rules</span></li>
+        <li><b>68</b><span>tests</span></li>
+      </ul>
+    </div>
+    <a class="scroll-hint" href="#thesis" aria-label="Scroll to thesis">↓</a>
+  </section>
+
+  <!-- ───────────────────────── THESIS ───────────────────────── -->
+  <section id="thesis" class="band">
+    <div class="band-head reveal">
+      <span class="kicker">01 — the thesis</span>
+      <h2>A knowledge base only compounds when retrieval outruns decay.</h2>
+      <p class="band-sub">Three terms decide whether a memory system grows or rots. engram is engineered to push each one in the right direction.</p>
+    </div>
+    <div class="cards three">
+      <article class="card reveal">
+        <span class="card-glyph">σ</span>
+        <h3>Coverage</h3>
+        <p>How much of what you know you actually surface. Hybrid retrieval widens candidacy beyond keyword matches, so conceptually relevant notes still appear.</p>
+      </article>
+      <article class="card reveal" style="--d:1">
+        <span class="card-glyph">ρ</span>
+        <h3>Precision</h3>
+        <p>How useful what you surface turns out to be. A reinforcement-learning utility signal re-ranks toward notes that earn their place by being cited.</p>
+      </article>
+      <article class="card reveal" style="--d:2">
+        <span class="card-glyph">δ</span>
+        <h3>Decay</h3>
+        <p>How fast unused knowledge goes stale. Maintenance skills and health metrics keep the graph linked and reachable, holding decay down.</p>
+      </article>
+    </div>
+    <p class="formula-line reveal">When&nbsp; <code>σ·ρ</code> &nbsp;exceeds&nbsp; <code>δ/100</code>, the system is above <b>escape velocity</b> — it accumulates useful, retrievable knowledge faster than it loses it.</p>
+  </section>
+
+  <!-- ───────────────────────── ENGINE ───────────────────────── -->
+  <section id="engine" class="band band-alt">
+    <div class="band-head reveal">
+      <span class="kicker">02 — the engineering centerpiece</span>
+      <h2>A two-stage hybrid ranker with a learned utility signal.</h2>
+      <p class="band-sub">The retrieval tool, <code>vault_retrieve</code>, scores every note two ways, fuses them, then re-ranks the top pool by a reinforcement-learning reward that the system teaches itself.</p>
+    </div>
+
+    <div class="engine-grid">
+      <ol class="stages">
+        <li class="stage reveal">
+          <span class="stage-no">1</span>
+          <h3>Fusion &amp; candidacy</h3>
+          <p>Every eligible note is scored by a <b>keyword composite</b> and <b>dense-vector cosine similarity</b> at once, then ranked on the normalized sum. Candidacy no longer needs a keyword hit — a conceptually relevant note with zero shared words still surfaces.</p>
+          <pre class="formula"><code>score = zNorm(match·3 + freshness·2 + connectivity·1)
+      + W_DENSE · zNorm(cosine(q, note))</code></pre>
+        </li>
+        <li class="stage reveal" style="--d:1">
+          <span class="stage-no">2</span>
+          <h3>MemRL re-ranking</h3>
+          <p>The top pool is re-ranked by a <b>learned utility</b> signal. When a retrieved note is later <em>cited</em> in the work, its utility is rewarded; when it's surfaced but ignored, it isn't — tracked as an exponential moving average per note.</p>
+          <pre class="formula"><code>rank += LAMBDA_UTILITY · zNorm(utility)
+utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
+        </li>
+      </ol>
+
+      <aside class="loop reveal" aria-label="the compounding loop">
+        <h4>The compounding loop</h4>
+        <ol class="loop-steps">
+          <li><span>retrieve</span> hybrid-ranked notes</li>
+          <li><span>work</span> cites what's useful</li>
+          <li><span>feedback</span> rewards cited notes</li>
+          <li><span>re-rank</span> sharpens next time</li>
+        </ol>
+        <p class="loop-note">Retrieval feeds work; work emits a signal; the signal sharpens the next retrieval. That's the loop that makes the base <em>compound</em> instead of just grow.</p>
+      </aside>
+    </div>
+
+    <div class="cards two engine-foot">
+      <article class="card reveal">
+        <h3>Measured, not assumed</h3>
+        <p><code>vault_feedback</code> records the reward · <code>vault_sigma_rho</code> reads accumulated feedback back out as measured coverage/precision · <code>vault_health</code> reports whether the whole system is above escape velocity.</p>
+      </article>
+      <article class="card reveal" style="--d:1">
+        <h3>Pluggable embeddings</h3>
+        <p>A dependency-free <b>hashing</b> backend (deterministic SHA-1 feature hashing, always available) or a <b>semantic ONNX</b> backend (a real sentence-transformer via <code>onnxruntime</code>). Vectors cache by content hash — only changed notes re-embed.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── ARCHITECTURE ───────────────────────── -->
+  <section id="architecture" class="band">
+    <div class="band-head reveal">
+      <span class="kicker">03 — architecture</span>
+      <h2>Four composable layers over one data substrate.</h2>
+      <p class="band-sub">The standard Claude Code layering: MCP for <em>access</em>, skills for <em>workflow</em>, hooks for <em>enforcement</em>, agents for <em>context isolation</em> — each with a non-overlapping job.</p>
+    </div>
+
+    <div class="stack reveal">
+      <div class="stack-row layers">
+        <div class="layer"><b>Skills</b><span>21 · slash-command workflows</span></div>
+        <div class="layer"><b>Hooks</b><span>14 · deterministic automation</span></div>
+        <div class="layer"><b>Rules</b><span>8 · always-on conventions</span></div>
+        <div class="layer"><b>Agents</b><span>2 · context-isolated subagents</span></div>
+      </div>
+      <div class="stack-flow">read / write ▾</div>
+      <div class="stack-row server">
+        <div class="layer wide">
+          <b>engram MCP server</b>
+          <span>23 tools · Python / FastMCP · hybrid retrieval · MemRL · health</span>
+        </div>
+      </div>
+      <div class="stack-flow">operates on ▾ &nbsp;·&nbsp; ▴ feedback signal</div>
+      <div class="stack-row vault">
+        <div class="layer wide alt">
+          <b>the vault</b>
+          <span>a PARA-organized store of Markdown notes + a link graph</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-table reveal">
+      <table>
+        <thead><tr><th>Layer</th><th>What it is</th><th>Why it's separate</th></tr></thead>
+        <tbody>
+          <tr><td><b>MCP server</b></td><td>A 23-tool Python FastMCP server: retrieval, link-graph, knowledge-health, read/write.</td><td>Access + computation. Portable across any MCP client.</td></tr>
+          <tr><td><b>Skills</b></td><td>Slash-command workflows (<code>/boot</code>, <code>/recall</code>, <code>/wrap</code>, …) that compose the tools into runbooks.</td><td>Teach the agent <em>how</em> to use the tools consistently.</td></tr>
+          <tr><td><b>Hooks</b></td><td>Shell scripts wired to lifecycle events (PreToolUse, PostToolUse, Stop, …).</td><td>Enforcement that fires <em>regardless</em> of what the model decides.</td></tr>
+          <tr><td><b>Rules</b></td><td>Always-loaded conventions (retrieval order, frontmatter schema, nudge system).</td><td>Shape default behavior without a slash command.</td></tr>
+          <tr><td><b>Agents</b></td><td>Subagent definitions for context-isolated fan-out (planning, research).</td><td>Keep large sub-tasks out of the main context window.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── REFERENCE ───────────────────────── -->
+  <section id="reference" class="band band-alt">
+    <div class="band-head reveal">
+      <span class="kicker">04 — reference</span>
+      <h2>23 tools, 21 skills.</h2>
+      <p class="band-sub">The MCP surface and the workflows that compose it.</p>
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-col reveal">
+        <h3>MCP tools <span class="count">23</span></h3>
+        <div class="chip-group">
+          <span class="grp-label">read / search</span>
+          <code>vault_status</code><code>vault_search</code><code>vault_read</code><code>vault_recent</code><code>vault_related</code><code>vault_manifest</code><code>vault_rebuild</code><code>vault_document_map</code><code>vault_tags</code><code>vault_active</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">retrieval &amp; knowledge-health</span>
+          <code>vault_retrieve</code><code>vault_health</code><code>vault_context</code><code>vault_session_check</code><code>vault_feedback</code><code>vault_sigma_rho</code><code>vault_prune_dryrun</code><code>vault_unmined_sessions</code>
+        </div>
+        <div class="chip-group">
+          <span class="grp-label">write</span>
+          <code>vault_checkpoint</code><code>vault_patch</code><code>vault_periodic</code><code>vault_command</code><code>vault_open</code>
+        </div>
+      </div>
+
+      <div class="ref-col reveal" style="--d:1">
+        <h3>Skills <span class="count">21</span></h3>
+        <dl class="skill-groups">
+          <dt>session lifecycle</dt><dd><code>boot</code><code>wrap</code><code>handoff</code></dd>
+          <dt>retrieval &amp; feedback</dt><dd><code>recall</code><code>retrieve</code><code>feedback</code><code>sigma-rho</code></dd>
+          <dt>knowledge health</dt><dd><code>health</code><code>health-check</code><code>prune</code><code>link-repair</code></dd>
+          <dt>intelligence &amp; evolution</dt><dd><code>evolve</code><code>connect</code><code>think-deep</code><code>weekly-review</code></dd>
+          <dt>capture</dt><dd><code>new-note</code><code>retro</code><code>mine-sessions</code></dd>
+          <dt>engineering</dt><dd><code>frame</code><code>execute</code><code>readme</code></dd>
+        </dl>
+      </div>
+    </div>
+
+    <p class="evolve-note reveal"><b>evolve</b> is the self-improving core: it audits whether learnings captured in memory have actually propagated into the operational surfaces — skills, rules, hooks — that govern behavior, closing the loop between <em>"we learned this"</em> and <em>"the agent now does this."</em></p>
+  </section>
+
+  <!-- ───────────────────────── QUICK START ───────────────────────── -->
+  <section id="quickstart" class="band">
+    <div class="band-head reveal">
+      <span class="kicker">05 — quick start</span>
+      <h2>Filesystem-first. No external services required.</h2>
+      <p class="band-sub">Python 3.12 + <a href="https://docs.astral.sh/uv/">uv</a>. Register once; the 23 tools load automatically in any MCP client.</p>
+    </div>
+
+    <figure class="code reveal">
+      <figcaption>install &amp; test the MCP server</figcaption>
+      <button class="copy" type="button" aria-label="Copy code">copy</button>
+      <pre><code>cd _meta/mcp-server-py
+uv sync --extra dev
+uv run pytest -q          # 60 tests (68 with the optional ONNX extra)
+
+# point engram at a vault (defaults to ~/vault)
+export VAULT_PATH="$(git rev-parse --show-toplevel)"</code></pre>
+    </figure>
+
+    <figure class="code reveal" style="--d:1">
+      <figcaption>optional — enable the semantic (ONNX) backend</figcaption>
+      <button class="copy" type="button" aria-label="Copy code">copy</button>
+      <pre><code>uv sync --extra embeddings
+uv run --extra embeddings python scripts/fetch-embedding-model.py
+export ENGRAM_EMBEDDINGS_BACKEND=onnx
+export ENGRAM_EMBEDDINGS_MODEL_DIR=$PWD/models/all-MiniLM-L6-v2</code></pre>
+    </figure>
+
+    <p class="qs-note reveal">A dependency-free hashing backend works out of the box. Drop the ONNX model in for real semantic retrieval. Live two-way sync with Obsidian is optional via the Local REST API.</p>
+  </section>
+
+  <!-- ───────────────────────── EVALUATION ───────────────────────── -->
+  <section id="evaluation" class="band band-alt">
+    <div class="band-head reveal">
+      <span class="kicker">06 — measured quality</span>
+      <h2>Skills are tuned against graded benchmarks, not vibes.</h2>
+    </div>
+    <div class="eval reveal">
+      <p>A runnable harness scores the <code>/execute</code> skill across three scenarios — <b>ambiguous scope</b>, an <b>over-engineering bait</b>, and a <b>security refactor</b> — with and without the skill loaded. Before/after grades make a regression in skill quality <em>measurable</em> instead of anecdotal.</p>
+      <div class="eval-scenarios">
+        <span>ambiguous scope</span><span>over-engineering bait</span><span>security refactor</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <span class="brand"><span>engram</span></span>
+      <p>A knowledge-compounding engine for AI agent memory.</p>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#engine">The engine</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#quickstart">Quick start</a>
+      <a href="https://github.com/alexiagnocco/engram">Source on GitHub ↗</a>
+    </nav>
+  </div>
+  <div class="foot-base">
+    <span>σ · ρ &gt; δ / 100</span>
+    <span>MIT licensed · built with Claude Code</span>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

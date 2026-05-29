@@ -1,8 +1,23 @@
-# engram
+<div align="center">
 
-**A knowledge-compounding engine for engineering work, built as a set of Claude Code customization layers.**
+<img src="docs/assets/engram-banner.svg" alt="engram — a knowledge-compounding engine" width="100%">
 
-Engram turns an AI coding agent's transient context into a durable, self-improving knowledge base. It pairs a Python MCP server that does **hybrid retrieval with a reinforcement-learning feedback loop** with a layered stack of skills, hooks, rules, and subagents that make an agent *retrieve before it acts, persist as it works, and learn what was actually useful*.
+<p><em>Turn an AI coding agent's transient context into a durable, self-improving knowledge base.</em></p>
+
+[![CI](https://github.com/alexiagnocco/engram/actions/workflows/ci.yml/badge.svg)](https://github.com/alexiagnocco/engram/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3ce6c4.svg?style=flat-square)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/python-3.12-6ad0ff.svg?style=flat-square&logo=python&logoColor=white)
+![FastMCP](https://img.shields.io/badge/MCP-FastMCP-9a8bff.svg?style=flat-square)
+![MCP tools: 23](https://img.shields.io/badge/MCP_tools-23-6ad0ff.svg?style=flat-square)
+[![Docs](https://img.shields.io/badge/docs-engram-3ce6c4.svg?style=flat-square)](https://alexiagnocco.github.io/engram/)
+
+**[Read the documentation site&nbsp;→](https://alexiagnocco.github.io/engram/)**
+
+</div>
+
+---
+
+engram pairs a Python MCP server that does **hybrid retrieval with a reinforcement-learning feedback loop** with a layered stack of skills, hooks, rules, and subagents that make an agent *retrieve before it acts, persist as it works, and learn what was actually useful*. It's a self-contained study in **agent memory** — retrieval, reinforcement learning, and orchestration — built to run on any MCP client.
 
 The thesis in one line:
 
@@ -23,7 +38,19 @@ The retrieval engine (`vault_retrieve`) is a **two-stage hybrid ranker with a le
 1. **Fusion / candidacy.** Every eligible note is scored two ways at once — a keyword composite (`match·3 + freshness·2 + connectivity·1`) and dense-vector cosine similarity against a query embedding — then ranked by `zNorm(keyword) + W_DENSE · zNorm(dense)`. Because candidacy no longer requires a keyword hit, a *conceptually* relevant note with zero shared keywords still surfaces.
 2. **MemRL re-ranking.** The top pool is re-ranked by a **reinforcement-learning utility signal**: `+ LAMBDA_UTILITY · zNorm(utility)`. Every time a retrieved note is later *cited* in the work, its utility is rewarded; when it's surfaced but ignored, it isn't. Utility is tracked as an exponential moving average (`α = 0.3`) per note, so the ranker continuously learns which notes are actually worth surfacing — not just which ones match the words.
 
-This is the loop that makes the system *compound*: retrieval feeds work, work emits a feedback signal, and the signal sharpens the next retrieval. `vault_feedback` records the reward; `vault_sigma_rho` reads the accumulated feedback back out as measured coverage/precision; `vault_health` reports whether the whole system is above escape velocity.
+This is the loop that makes the system *compound*: retrieval feeds work, work emits a feedback signal, and the signal sharpens the next retrieval.
+
+```mermaid
+flowchart LR
+    Q["query"] --> F["fusion<br/>keyword composite + dense cosine"]
+    F --> RR["MemRL re-rank<br/>+ λ · utility"]
+    RR --> O["ranked notes"]
+    O --> W["work cites a note"]
+    W --> FB["vault_feedback<br/>reward · EMA α=0.3"]
+    FB -.->|sharpens next retrieval| RR
+```
+
+`vault_feedback` records the reward; `vault_sigma_rho` reads the accumulated feedback back out as measured coverage/precision; `vault_health` reports whether the whole system is above escape velocity.
 
 Embeddings are pluggable: a dependency-free **hashing** backend (deterministic SHA-1 feature hashing, always available) or a **semantic ONNX** backend (a real sentence-transformer via `onnxruntime`). Per-note vectors are cached incrementally and keyed by content hash, so only changed notes re-embed.
 
@@ -33,22 +60,18 @@ Embeddings are pluggable: a dependency-free **hashing** backend (deterministic S
 
 Four composable customization layers, plus the data substrate they operate on.
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│  Skills (21)   slash-command workflows: /boot /recall /wrap … │
-│  Hooks (14)    deterministic lifecycle automation             │
-│  Rules (8)     always-on behavioral conventions               │
-│  Agents (2)    subagent orchestration (plan, research)        │
-└───────────────┬─────────────────────────────────────────────┘
-                │ all read/write through
-        ┌───────▼────────┐
-        │  engram MCP     │   23 tools — Python / FastMCP
-        │  server         │   hybrid retrieval · MemRL · health
-        └───────┬────────┘
-                │ operates on
-        ┌───────▼────────┐
-        │  the vault      │   a PARA-organized store of Markdown notes
-        └────────────────┘
+```mermaid
+flowchart TD
+    subgraph layers["Claude Code customization layers"]
+        direction LR
+        S["Skills · 21<br/>slash-command workflows"]
+        H["Hooks · 14<br/>deterministic lifecycle automation"]
+        R["Rules · 8<br/>always-on conventions"]
+        A["Agents · 2<br/>context-isolated subagents"]
+    end
+    layers -->|read / write| MCP["engram MCP server<br/>23 tools · Python / FastMCP<br/>hybrid retrieval · MemRL · health"]
+    MCP -->|operates on| V["the vault<br/>PARA-organized Markdown notes"]
+    V -.->|feedback signal| MCP
 ```
 
 | Layer | What it is | Why it's separate |
@@ -63,7 +86,10 @@ The MCP server itself is cleanly layered: a **dispatcher** routes each call to a
 
 ---
 
-## The MCP tools (23)
+## Reference
+
+<details>
+<summary><b>The 23 MCP tools</b></summary>
 
 ```text
 Read / search   vault_status  vault_search  vault_read  vault_recent
@@ -76,7 +102,10 @@ Write           vault_checkpoint  vault_patch  vault_periodic
                 vault_command  vault_open
 ```
 
-## The skills (21)
+</details>
+
+<details>
+<summary><b>The 21 skills</b></summary>
 
 | Group | Skills |
 |---|---|
@@ -89,6 +118,20 @@ Write           vault_checkpoint  vault_patch  vault_periodic
 
 `evolve` is the self-improving core: it audits whether learnings captured in memory have actually propagated into the operational surfaces (skills, rules, hooks) that govern behavior — closing the loop between "we learned this" and "the agent now does this."
 
+</details>
+
+<details>
+<summary><b>Embedding backends</b></summary>
+
+| Backend | Dependencies | Notes |
+|---|---|---|
+| Hashing (default fallback) | none | Deterministic SHA-1 feature hashing. Always available. **Lexical, not semantic.** |
+| ONNX | `embeddings` extra | Real sentence-transformer (e.g. all-MiniLM-L6-v2) via onnxruntime. **Semantic.** |
+
+Per-note vectors are cached incrementally (keyed by content hash, gitignored); only changed notes re-embed.
+
+</details>
+
 ---
 
 ## Quick start
@@ -97,7 +140,7 @@ Write           vault_checkpoint  vault_patch  vault_periodic
 # 1. Install the MCP server (Python 3.12 + uv)
 cd _meta/mcp-server-py
 uv sync --extra dev
-uv run pytest -q          # 68 tests
+uv run pytest -q          # 60 tests (68 with the optional ONNX extra)
 
 # 2. Point engram at your knowledge vault (defaults to ~/vault)
 export VAULT_PATH="$(git rev-parse --show-toplevel)"   # e.g. this repo
@@ -132,6 +175,8 @@ engram/
 ├── _meta/
 │   ├── mcp-server-py/ the engram MCP server (Python / FastMCP, 68 tests)
 │   └── scripts/       standalone vault utilities
+├── docs/              the documentation website (bespoke static site → GitHub Pages)
+├── .github/workflows/ CI (ruff + pytest) and Pages deploy
 ├── 00-inbox/ … 50-maps/   the PARA knowledge vault (empty scaffold here)
 ├── memory/            project memory, glossary, contacts (empty scaffold)
 ├── .mcp.json          MCP server registration

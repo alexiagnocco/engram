@@ -60,3 +60,15 @@ These compose to make a generic AI coding agent operate the vault. Each has a no
 3. The agent does the work, persisting decisions to the vault as it goes.
 4. A **hook** (`post-edit-activity-log.sh`) records each write.
 5. At session end, a **skill** (`/wrap`) records `vault_feedback` for the notes that were actually cited, updates project memory, and commits — feeding the MemRL loop that sharpens the next session's retrieval.
+
+## Repo infrastructure: `docs/` and `.github/`
+
+Beyond the system itself, the repository ships two supporting trees:
+
+```text
+docs/                The documentation website — a bespoke static site
+                     (HTML/CSS/JS), deployed to GitHub Pages.
+.github/workflows/   CI (ruff + pytest + mypy) and the Pages deploy.
+```
+
+These are project infrastructure, not part of the engram runtime — the engine works with neither present.

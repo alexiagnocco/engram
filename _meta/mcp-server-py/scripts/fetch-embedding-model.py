@@ -59,7 +59,7 @@ def main() -> int:
     for candidate in ONNX_CANDIDATES:
         try:
             onnx = hf_hub_download(repo_id=args.model, filename=candidate)
-        except Exception:  # noqa: BLE001 — try next candidate
+        except Exception:  # try next candidate
             continue
         (out_dir / "model.onnx").write_bytes(Path(onnx).read_bytes())
         print(f"{candidate} -> {out_dir / 'model.onnx'}")
