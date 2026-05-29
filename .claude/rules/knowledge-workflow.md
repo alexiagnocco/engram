@@ -2,7 +2,7 @@
 
 ## Core Principle
 
-Every development session must increase the vault's knowledge stock `K` and maintain escape velocity: `sigma x rho > delta/100` — where **sigma** is retrieval coverage (how much of what you know you actually surface), **rho** is retrieval precision (how useful what you surface is), and **delta** is the decay rate (how fast unused knowledge goes stale). When `sigma·rho` exceeds `delta/100`, the knowledge base compounds faster than it decays. In practice this means: **retrieve before creating, persist during work, extract learnings after.**
+Every development session must increase the vault's knowledge stock `K` and maintain escape velocity: `sigma x rho > delta/100` — where **sigma** is retrieval coverage (how much of what you know you actually surface), **rho** is retrieval precision (how useful what you surface is), and **delta** is the decay rate (how fast unused knowledge goes stale). When `sigma·rho` exceeds `delta/100`, the knowledge base compounds faster than it decays. In practice this means: **retrieve before creating, persist during work, extract learnings after.** *(This model is adapted from [AgentOps · The Science](https://boshu2.github.io/agentops/the-science/); see CREDITS.md.)*
 
 ## Session Lifecycle (MANDATORY for all dev work)
 

@@ -69,3 +69,7 @@ true σ=0.38  true ρ=0.53   (from 112 recorded feedback events, 197 scored note
 ```
 
 These maintenance skills keep **σ** high (everything reachable) and **δ** low (nothing rotting unlinked) — the two terms that decide whether the system stays above escape velocity.
+
+---
+
+*The σ/ρ/δ compounding model used throughout these examples is adapted from [AgentOps · The Science](https://boshu2.github.io/agentops/the-science/) (boshu2, Apache-2.0). See [CREDITS.md](CREDITS.md).*

@@ -46,6 +46,7 @@
     <a href="#architecture">Architecture</a>
     <a href="#reference">Reference</a>
     <a href="#quickstart">Quick start</a>
+    <a href="#credits">Credits</a>
     <a class="nav-cta" href="https://github.com/alexiagnocco/engram">GitHub ↗</a>
   </nav>
 </header>
@@ -112,6 +113,7 @@
       </article>
     </div>
     <p class="formula-line reveal">When&nbsp; <code>σ·ρ</code> &nbsp;exceeds&nbsp; <code>δ/100</code>, the system is above <b>escape velocity</b> — it accumulates useful, retrievable knowledge faster than it loses it.</p>
+    <p class="credit-inline reveal">This compounding model is adapted from <a href="https://boshu2.github.io/agentops/the-science/">AgentOps · <em>The Science</em></a> by <a href="https://github.com/boshu2/agentops">boshu2</a> (Apache-2.0) — see <a href="#credits">credits</a>.</p>
   </section>
 
   <!-- ───────────────────────── ENGINE ───────────────────────── -->
@@ -294,6 +296,22 @@ export ENGRAM_EMBEDDINGS_MODEL_DIR=$PWD/models/all-MiniLM-L6-v2</code></pre>
       </div>
     </div>
   </section>
+  <!-- ───────────────────────── CREDITS ───────────────────────── -->
+  <section id="credits" class="band">
+    <div class="band-head reveal">
+      <span class="kicker">07 — credits &amp; prior art</span>
+      <h2>Built on AgentOps' science.</h2>
+      <p class="band-sub">engram's knowledge-compounding model — the <code>σ·ρ &gt; δ/100</code> escape-velocity thesis, the σ/ρ/δ terms, the MemRL utility loop, the 40% context rule — is adapted from <a href="https://boshu2.github.io/agentops/the-science/">AgentOps · <em>The Science</em></a> by <a href="https://github.com/boshu2/agentops">boshu2</a> (Apache-2.0). engram is an independent implementation — it includes no AgentOps code.</p>
+    </div>
+    <ul class="credits-list reveal">
+      <li><span class="src">AgentOps · The Science</span> — the compounding model, escape velocity, σ/ρ/δ, and the MemRL framing. <a href="https://boshu2.github.io/agentops/the-science/">the-science</a> · <a href="https://github.com/boshu2/agentops">repository</a></li>
+      <li><span class="src">Ebbinghaus (1885)</span> — <em>Memory: A Contribution to Experimental Psychology.</em> The forgetting curve; the basis for treating knowledge as decaying (δ).</li>
+      <li><span class="src">Darr, Argote &amp; Epple (1995)</span> — "The Acquisition, Transfer, and Depreciation of Knowledge in Service Organizations," <em>Management Science.</em> Source of the ~17%/week decay rate.</li>
+      <li><span class="src">Liu et al. (2023)</span> — "Lost in the Middle: How Language Models Use Long Contexts." <a href="https://arxiv.org/abs/2307.03172">arXiv:2307.03172</a>. Long-context utilization — the 40% rule.</li>
+      <li><span class="src">MemRL (2026)</span> — "Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory." <a href="https://arxiv.org/abs/2601.03192">arXiv:2601.03192</a>. Two-phase retrieval (semantic filter → learned utility) — engram's fusion → MemRL re-rank mirrors it.</li>
+    </ul>
+    <p class="qs-note reveal">Full attribution and the complete reference list live in <a href="https://github.com/alexiagnocco/engram/blob/main/CREDITS.md">CREDITS.md</a>.</p>
+  </section>
 </main>
 
 <footer class="foot">
@@ -313,6 +331,7 @@ export ENGRAM_EMBEDDINGS_MODEL_DIR=$PWD/models/all-MiniLM-L6-v2</code></pre>
     <span>σ · ρ &gt; δ / 100</span>
     <span>MIT licensed · built with Claude Code</span>
   </div>
+  <p class="foot-credit">Knowledge-compounding model adapted from <a href="https://boshu2.github.io/agentops/the-science/">AgentOps · The Science</a> (boshu2, Apache-2.0) · <a href="https://github.com/alexiagnocco/engram/blob/main/CREDITS.md">Credits</a></p>
 </footer>
 
 <script src="main.js" defer></script>

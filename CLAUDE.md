@@ -4,7 +4,7 @@ This file governs how Claude Code operates inside an engram knowledge vault. It 
 
 ## What this is
 
-A knowledge-compounding system for engineering work. The vault is a PARA-organized store of Markdown notes; the `engram` MCP server gives structured, scored access to it; skills, hooks, and rules make the agent retrieve before acting, persist as it works, and learn what was useful. The goal is *escape velocity* — surfacing the right knowledge faster than it decays (`σ·ρ > δ/100`).
+A knowledge-compounding system for engineering work. The vault is a PARA-organized store of Markdown notes; the `engram` MCP server gives structured, scored access to it; skills, hooks, and rules make the agent retrieve before acting, persist as it works, and learn what was useful. The goal is *escape velocity* — surfacing the right knowledge faster than it decays (`σ·ρ > δ/100`). *(This compounding model is adapted from [AgentOps · The Science](https://boshu2.github.io/agentops/the-science/); see [CREDITS.md](CREDITS.md).)*
 
 ## Non-negotiables
 
