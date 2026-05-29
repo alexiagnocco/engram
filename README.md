@@ -92,96 +92,113 @@ The MCP server itself is cleanly layered: a **dispatcher** routes each call to a
 
 <details>
 <summary><b>The 23 MCP tools</b></summary>
-
-<sub>Click any tool to see what it does.</sub>
-
-**Read / search**
-
-<details><summary><code>vault_status</code></summary>Connection status, plugin version, and server health.</details>
-<details><summary><code>vault_search</code></summary>Search vault notes by metadata filters and/or text query.</details>
-<details><summary><code>vault_read</code></summary>Read the full content of one or more vault notes by path.</details>
-<details><summary><code>vault_recent</code></summary>Get notes modified in the last N days.</details>
-<details><summary><code>vault_related</code></summary>Get bidirectional link neighbors for a note.</details>
-<details><summary><code>vault_manifest</code></summary>Return the vault manifest index.</details>
-<details><summary><code>vault_rebuild</code></summary>Trigger a manifest rebuild from vault contents.</details>
-<details><summary><code>vault_document_map</code></summary>Get the heading/block/frontmatter skeleton for a note. Requires REST.</details>
-<details><summary><code>vault_tags</code></summary>List all tags with hierarchical counts. Requires REST.</details>
-<details><summary><code>vault_active</code></summary>Read, append to, or replace the currently-open note in Obsidian. Requires REST.</details>
-
-**Retrieval + knowledge health**
-
-<details><summary><code>vault_retrieve</code></summary>Hybrid composite-score + dense-vector retrieval with re-ranking.</details>
-<details><summary><code>vault_health</code></summary>Compute knowledge health metrics: K, I(t), delta, sigma, rho, phi, escape velocity, dK/dt.</details>
-<details><summary><code>vault_context</code></summary>Pre-session context loader: surfaces relevant vault knowledge at session start.</details>
-<details><summary><code>vault_session_check</code></summary>Post-session validation: checks that knowledge was persisted properly.</details>
-<details><summary><code>vault_feedback</code></summary>Record whether retrieved notes were actually helpful (MemRL feedback).</details>
-<details><summary><code>vault_sigma_rho</code></summary>Compute true sigma and rho from MemRL feedback data.</details>
-<details><summary><code>vault_prune_dryrun</code></summary>Dry-run prune scan: count candidates by category without moving anything.</details>
-<details><summary><code>vault_unmined_sessions</code></summary>Check for unmined sessions that should be processed for knowledge extraction.</details>
-
+<br>  
+    
+**Read / Search**
+| Tool | Description | 
+|---|---|
+|vault_status|Connection status, plugin version, and server health.|
+|vault_search|Search vault notes by metadata filters and/or text query.|
+|vault_read|Read the full content of one or more vault notes by path.|
+|vault_recent|Get notes modified in the last N days.|
+|vault_related|Get bidirectional link neighbors for a note.|
+|vault_manifest|Return the vault manifest index.|
+|vault_rebuild|Trigger a manifest rebuild from vault contents.|
+|vault_document_map|Get the heading/block/frontmatter skeleton for a note. Requires REST.|
+|vault_tags|List all tags with hierarchical counts. Requires REST.|
+|vault_active|Read, append to, or replace the currently-open note in Obsidian. Requires REST.|  
+<br>  
+    
+**Retrieval + Knowledge Health**
+| Tool | Description | 
+|---|---|
+|vault_retrieve|Hybrid composite-score + dense-vector retrieval with re-ranking.|
+|vault_health|Compute knowledge health metrics: K, I(t), delta, sigma, rho, phi, escape velocity, dK/dt.|
+|vault_context|Pre-session context loader: surfaces relevant vault knowledge at session start.|
+|vault_session_check|Post-session validation: checks that knowledge was persisted properly.|
+|vault_feedback|Record whether retrieved notes were actually helpful (MemRL feedback).|
+|vault_sigma_rho|Compute true sigma and rho from MemRL feedback data.|
+|vault_prune_dryrun|Dry-run prune scan: count candidates by category without moving anything.|
+|vault_unmined_sessions|Check for unmined sessions that should be processed for knowledge extraction.| 
+<br>  
+    
 **Write**
-
-<details><summary><code>vault_checkpoint</code></summary>Mid-session incremental project memory update.</details>
-<details><summary><code>vault_patch</code></summary>Surgical heading/block/frontmatter edit via REST PATCH. Requires REST.</details>
-<details><summary><code>vault_periodic</code></summary>Daily/weekly/monthly/quarterly/yearly note CRUD. Requires REST.</details>
-<details><summary><code>vault_command</code></summary>List or run Obsidian commands. Requires REST.</details>
-<details><summary><code>vault_open</code></summary>Bring a note into focus in the Obsidian UI. Requires REST.</details>
+| Tool | Description | 
+|---|---|
+|vault_checkpoint|Mid-session incremental project memory update.|
+|vault_patch|Surgical heading/block/frontmatter edit via REST PATCH. Requires REST.|
+|vault_periodic|Daily/weekly/monthly/quarterly/yearly note CRUD. Requires REST.|
+|vault_command|List or run Obsidian commands. Requires REST.|
+|vault_open|Bring a note into focus in the Obsidian UI. Requires REST.|
 
 </details>
-
+<br>  
+    
 <details>
 <summary><b>The 21 skills</b></summary>
-
-<sub>Click any skill to see what it does.</sub>
-
-**Session lifecycle**
-
-<details><summary><code>boot</code></summary>Session startup: get date, load context, check health, and surface relevant knowledge.</details>
-<details><summary><code>wrap</code></summary>Graceful session shutdown: retro, feedback, handoff, commit, exit.</details>
-<details><summary><code>handoff</code></summary>Capture session context for continuity between sessions.</details>
-
-**Retrieval & feedback**
-
-<details><summary><code>recall</code></summary>Structured vault retrieval with relevance ranking.</details>
-<details><summary><code>retrieve</code></summary>Composite-scored vault retrieval with MemRL utility weighting.</details>
-<details><summary><code>feedback</code></summary>Record whether retrieved vault notes were helpful (MemRL feedback loop).</details>
-<details><summary><code>sigma-rho</code></summary>Compute true sigma and rho from MemRL feedback data.</details>
-
-**Knowledge health**
-
-<details><summary><code>health</code></summary>Quick knowledge health metrics from the knowledge compounding equation.</details>
-<details><summary><code>health-check</code></summary>Quick vault health scan for orphan notes, broken links, missing frontmatter, and stale content.</details>
-<details><summary><code>prune</code></summary>Archive stale notes, clean completed items, and maintain vault scale — the remediation half of health-check.</details>
-<details><summary><code>link-repair</code></summary>Fix broken wikilinks, link orphan notes to MOCs, and repair escape-character bugs.</details>
-
-**Intelligence & evolution**
-
-<details><summary><code>evolve</code></summary>Propose structural improvements to the vault and propagate captured learnings into operational surfaces (skills, rules, hooks).</details>
-<details><summary><code>connect</code></summary>Find cross-domain connections and synthesis opportunities between notes.</details>
-<details><summary><code>think-deep</code></summary>Extended reasoning for complex decisions — gathers context, reasons deeply, and persists the thinking chain.</details>
-<details><summary><code>weekly-review</code></summary>Generate a 'State of the Vault' assessment of what's working, what's decaying, and what to do next.</details>
-
+<br>  
+    
+**Session Lifecycle**
+| Skill | Description | 
+|---|---|
+|boot|Session startup: get date, load context, check health, and surface relevant knowledge.|
+|wrap|Graceful session shutdown: retro, feedback, handoff, commit, exit.|
+|handoff|Capture session context for continuity between sessions.|  
+<br>  
+    
+**Retrieval & Feedback**
+| Skill | Description | 
+|---|---|
+|recall|Structured vault retrieval with relevance ranking.|
+|retrieve|Composite-scored vault retrieval with MemRL utility weighting.|
+|feedback|Record whether retrieved vault notes were helpful (MemRL feedback loop).|
+|sigma-rho|Compute true sigma and rho from MemRL feedback data.|  
+<br>  
+    
+**Knowledge Health**
+| Skill | Description | 
+|---|---|
+|health|Quick knowledge health metrics from the knowledge compounding equation.|
+|health-check|Quick vault health scan for orphan notes, broken links, missing frontmatter, and stale content.|
+|prune|Archive stale notes, clean completed items, and maintain vault scale — the remediation half of health-check.|
+|link-repair|Fix broken wikilinks, link orphan notes to MOCs, and repair escape-character bugs.|  
+<br>  
+    
+**Intelligence & Evolution**
+| Skill | Description | 
+|---|---|
+|evolve|Propose structural improvements to the vault and propagate captured learnings into operational surfaces (skills, rules, hooks).|
+|connect|Find cross-domain connections and synthesis opportunities between notes.|
+|think-deep|Extended reasoning for complex decisions — gathers context, reasons deeply, and persists the thinking chain.|
+|weekly-review|Generate a 'State of the Vault' assessment of what's working, what's decaying, and what to do next.|  
+<br>  
+    
 **Capture**
-
-<details><summary><code>new-note</code></summary>Create a new note with proper frontmatter, naming, and linking.</details>
-<details><summary><code>retro</code></summary>Capture learnings and retrospectives from development work.</details>
-<details><summary><code>mine-sessions</code></summary>Find and extract knowledge from unmined Claude Code sessions.</details>
-
+| Skill | Description | 
+|---|---|
+|new-note|Create a new note with proper frontmatter, naming, and linking.|
+|retro|Capture learnings and retrospectives from development work.|
+|mine-sessions|Find and extract knowledge from unmined Claude Code sessions.|  
+<br>  
+    
 **Engineering**
-
-<details><summary><code>frame</code></summary>Design project scaffolds, directory hierarchies, and naming conventions — or audit and reorganize existing codebases.</details>
-<details><summary><code>execute</code></summary>Pre-task discipline for coding work: think before coding, simplicity first, surgical changes, goal-driven execution.</details>
-<details><summary><code>readme</code></summary>Generate a comprehensive, research-backed README.md for any project by analyzing the codebase.</details>
+| Skill | Description | 
+|---|---|
+|frame|Design project scaffolds, directory hierarchies, and naming conventions — or audit and reorganize existing codebases.|
+|execute|Pre-task discipline for coding work: think before coding, simplicity first, surgical changes, goal-driven execution.|
+|readme|Generate a comprehensive, research-backed README.md for any project by analyzing the codebase.|
 
 </details>
-
+<br>  
+    
 <details>
 <summary><b>Embedding backends</b></summary>
-
+<br>  
+    
 | Backend | Dependencies | Notes |
 |---|---|---|
 | Hashing (default fallback) | none | Deterministic SHA-1 feature hashing. Always available. **Lexical, not semantic.** |
-| ONNX | `embeddings` extra | Real sentence-transformer (e.g. all-MiniLM-L6-v2) via onnxruntime. **Semantic.** |
+| ONNX | `embeddings` extra | Real sentence-transformer (e.g. all-MiniLM-L6-v2) via onnxruntime. **Semantic.** |  
 
 Per-note vectors are cached incrementally (keyed by content hash, gitignored); only changed notes re-embed.
 
