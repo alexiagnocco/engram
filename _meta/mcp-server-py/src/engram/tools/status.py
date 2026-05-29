@@ -1,14 +1,22 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from engram.config import FallbackMode, Settings
 from engram.rest.client import _version_lt
 from engram.rest.connection import ConnectionMonitor, ConnectionState
 
+if TYPE_CHECKING:
+    from engram.scoring.embeddings import EmbeddingBackend
 
-def build_status_response(settings: Settings, monitor: ConnectionMonitor) -> str:
+
+def build_status_response(
+    settings: Settings,
+    monitor: ConnectionMonitor,
+    *,
+    backend: EmbeddingBackend | None = None,
+) -> str:
     state = monitor.current_state
     if settings.obsidian_fallback_mode == FallbackMode.FS_ONLY:
         state_label = "DISABLED"
@@ -25,6 +33,12 @@ def build_status_response(settings: Settings, monitor: ConnectionMonitor) -> str
         "rest_url": settings.obsidian_rest_url,
         "vault_path": str(settings.vault_path),
         "server_version": "4.0.0",
+        # Nested {name, dim} (vs the flat scalars above) groups the backend
+        # identity and keeps the disabled case a single null. Name prefix
+        # 'onnx:' = semantic dense retrieval, 'hashing-' = lexical fallback.
+        "embedding_backend": (
+            {"name": backend.name, "dim": backend.dim} if backend is not None else None
+        ),
     }
 
     if monitor.error_message:

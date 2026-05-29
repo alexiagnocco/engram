@@ -97,7 +97,7 @@ The MCP server itself is cleanly layered: a **dispatcher** routes each call to a
 **Read / Search**
 | Tool | Description | 
 |---|---|
-|vault_status|Connection status, plugin version, and server health.|
+|vault_status|Connection status, plugin version, server health, and the active embedding backend (semantic vs lexical fallback).|
 |vault_search|Search vault notes by metadata filters and/or text query.|
 |vault_read|Read the full content of one or more vault notes by path.|
 |vault_recent|Get notes modified in the last N days.|
@@ -212,7 +212,7 @@ Per-note vectors are cached incrementally (keyed by content hash, gitignored); o
 # 1. Install the MCP server (Python 3.12 + uv)
 cd _meta/mcp-server-py
 uv sync --extra dev
-uv run pytest -q          # 60 tests (68 with the optional ONNX extra)
+uv run pytest -q          # 62 tests (71 with the optional ONNX extra)
 
 # 2. Point engram at your knowledge vault (defaults to ~/vault)
 export VAULT_PATH="$(git rev-parse --show-toplevel)"   # e.g. this repo

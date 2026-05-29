@@ -106,11 +106,19 @@ def vault_status(ctx: Context) -> str:
 
     Returns the current REST connection state (CONNECTED, DEGRADED,
     DISCONNECTED, UNCONFIGURED, or DISABLED), plugin version, fallback
-    mode, and any active error.
+    mode, any active error, and the active embedding backend identity
+    (name + dim). The backend name makes the retrieval mode self-evident:
+    an 'onnx:' prefix is real semantic dense retrieval, 'hashing-' is the
+    lexical fallback, and null means dense retrieval is disabled.
     """
     settings: Settings = ctx.lifespan_context["settings"]
     monitor: ConnectionMonitor = ctx.lifespan_context["monitor"]
-    return build_status_response(settings, monitor)
+    embedding_store: EmbeddingStore | None = ctx.lifespan_context.get("embedding_store")
+    return build_status_response(
+        settings,
+        monitor,
+        backend=embedding_store.backend if embedding_store is not None else None,
+    )
 
 
 # ---------------------------------------------------------------------------

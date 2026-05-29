@@ -228,7 +228,7 @@ utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
       <div class="ref-panel active" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
         <div class="chip-group">
           <span class="grp-label">read / search</span>
-          <code data-desc="Connection status, plugin version, and server health.">vault_status</code><code data-desc="Search vault notes by metadata filters and/or text query.">vault_search</code><code data-desc="Read the full content of one or more vault notes by path.">vault_read</code><code data-desc="Get notes modified in the last N days.">vault_recent</code><code data-desc="Get bidirectional link neighbors for a note.">vault_related</code><code data-desc="Return the vault manifest index.">vault_manifest</code><code data-desc="Trigger a manifest rebuild from vault contents.">vault_rebuild</code><code data-desc="Get the heading/block/frontmatter skeleton for a note. Requires REST.">vault_document_map</code><code data-desc="List all tags with hierarchical counts. Requires REST.">vault_tags</code><code data-desc="Read, append to, or replace the currently-open note in Obsidian. Requires REST.">vault_active</code>
+          <code data-desc="Connection status, plugin version, server health, and the active embedding backend (semantic vs lexical fallback).">vault_status</code><code data-desc="Search vault notes by metadata filters and/or text query.">vault_search</code><code data-desc="Read the full content of one or more vault notes by path.">vault_read</code><code data-desc="Get notes modified in the last N days.">vault_recent</code><code data-desc="Get bidirectional link neighbors for a note.">vault_related</code><code data-desc="Return the vault manifest index.">vault_manifest</code><code data-desc="Trigger a manifest rebuild from vault contents.">vault_rebuild</code><code data-desc="Get the heading/block/frontmatter skeleton for a note. Requires REST.">vault_document_map</code><code data-desc="List all tags with hierarchical counts. Requires REST.">vault_tags</code><code data-desc="Read, append to, or replace the currently-open note in Obsidian. Requires REST.">vault_active</code>
         </div>
         <div class="chip-group">
           <span class="grp-label">retrieval &amp; knowledge-health</span>
@@ -290,7 +290,7 @@ utility ← (1 − α)·utility + α·reward      # α = 0.3</code></pre>
       <button class="copy" type="button" aria-label="Copy code">copy</button>
       <pre><code>cd _meta/mcp-server-py
 uv sync --extra dev
-uv run pytest -q          # 60 tests (68 with the optional ONNX extra)
+uv run pytest -q          # 62 tests (71 with the optional ONNX extra)
 
 # point engram at a vault (defaults to ~/vault)
 export VAULT_PATH="$(git rev-parse --show-toplevel)"</code></pre>
